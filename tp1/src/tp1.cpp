@@ -91,9 +91,9 @@ int main(int argc, char** argv){
     vector<double> results;
     // Ejecutamos el algoritmo
 
-    if(argv[1] == 0){
+    if(metodo == "0"){
         results = CMM(Equipos, results);
-    }else if (argv[1] == 0){
+    }else if (metodo == "0"){
         results = WP(Equipos, results);
     } else{
 
