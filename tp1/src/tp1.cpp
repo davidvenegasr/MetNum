@@ -38,8 +38,8 @@ int main(int argc, char** argv){
     // Leemos el input
     fstream fin (input_file);
     fstream fout (output_file);
-    unsigned int cant_equipos = 0;
-    unsigned int cant_partidos = 0;
+    int cant_equipos = 0;
+    int cant_partidos = 0;
     fin >> cant_equipos >> cant_partidos;
 
     vector<Partido> partidos;
