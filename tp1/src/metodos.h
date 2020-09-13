@@ -28,6 +28,6 @@ struct Partido{
     Partido(){equipo_1=0;equipo_2=0;puntaje_1=0;puntaje_2=0;};
 };
 
-vector<double>& CMM(map<int,Equipo> Equipos, vector<double> &res);
+vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res);
     
 vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res);

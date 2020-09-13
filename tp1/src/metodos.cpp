@@ -1,4 +1,7 @@
+#include <iostream>
 #include "metodos.h"
+
+vector<double>& Elim_Gaussiana(vector<vector<double>> augmentedMatrix, vector<double> &res);
 
 vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
     for(int i = 0; i < Equipos.size(); i++){
@@ -8,7 +11,38 @@ vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
     return res;
 }
 
-vector<double>& CMM(map<int,Equipo> Equipos, vector<double> &res){
+vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
+    vector<vector<double>> C(Equipos.size(),vector<double>(Equipos.size()+1,0));
+    // Llenamos la matriz C (aumentada) con sus datos correspondientes
+    int i = 0;
+    for (const auto &ei : Equipos) {
+        int j = 0;
+        auto &equipo_i = ei.second;
+        for (const auto &ej : Equipos) {
+            auto &equipo_j = ej.second;
+            if (i == j) {
+                C[i][j] = 2 + equipo_i.p_totales();
+            } else {
+                if (equipo_i.cant_matches_con.count(equipo_j.id)) {
+                    C[i][j] = 0 - equipo_i.cant_matches_con.at(equipo_j.id);
+                } else {
+                    C[i][j] = 0;
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+
+    i = 0;
+    for (const auto &ei : Equipos) {
+        auto &equipo_i = ei.second;
+        C[i][Equipos.size()] = 1 + (equipo_i.p_perdidos - equipo_i.p_ganados) / 2.0;
+        i++;
+    }
+
+    // Resolvemos el sistema
+    res = Elim_Gaussiana(C,res);
     return res;
 }
 
