@@ -1,7 +1,39 @@
 #include <iostream>
+#include <iomanip>
+#include <cmath>
 #include "metodos.h"
 
-vector<double>& Elim_Gaussiana(vector<vector<double>> augmentedMatrix, vector<double> &res);
+vector<double>& Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res);
+
+void print_matrix(vector<vector<double>> &matrix, int width) {
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = 0; j < matrix[0].size(); ++j) {
+            std::cout <<std::setw(width) <<matrix[i][j] <<" ";
+        }
+        std::cout <<endl;
+    }
+    std::cout <<endl;
+}
+
+bool test_matrix(vector<vector<double>> &M, vector<double> &X, double epsilon) {
+    bool r_bool = true;
+    vector<double> res(M.size(),0);
+    for (int i = 0; i < M.size(); ++i) {
+        for (int j = 0; j < M[0].size(); ++j) {
+            res[i] += M[i][j]*X[j];
+        }
+    }
+    for (int i = 0; i < M.size(); ++i) {
+        std::cout <<std::setw(12) <<M[i][M.size()] <<" == " <<std::setw(12) <<res[i] <<" ?";
+        if (fabs(res[i] - M[i][M.size()]) >= epsilon) {
+            r_bool = false;
+            std::cout <<"\t<-NO" << endl;
+        } else {
+            std::cout <<"\t<-SI" << endl;
+        }
+    }
+    return r_bool;
+}
 
 vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
     for(int i = 0; i < Equipos.size(); i++){
@@ -37,10 +69,9 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
     i = 0;
     for (const auto &ei : Equipos) {
         auto &equipo_i = ei.second;
-        C[i][Equipos.size()] = 1 + (equipo_i.p_perdidos - equipo_i.p_ganados) / 2.0;
+        C[i][Equipos.size()] = 1 + (equipo_i.p_ganados - equipo_i.p_perdidos) / (double) 2;
         i++;
     }
-
     // Resolvemos el sistema
     res = Elim_Gaussiana(C,res);
     return res;
@@ -48,12 +79,14 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
 
 
 /*Funcion que triangula superiormente una matriz aumentada sin realizar permutaciones. */
-void triangularSuperiormente(vector<vector<double>> augmentedMatrix, int N){
+void triangularSuperiormente(vector<vector<double>> &augmentedMatrix, int N){
 
 	for (int k = 0; k < N; k++){
 
 		for (int i = k+1; i < N; i++){
-
+            if (augmentedMatrix[k][k] == 0){
+                std::cout <<"ERROR"<<endl;
+            }
 			double factor = augmentedMatrix[i][k]/augmentedMatrix[k][k];
 			
 			for (int j = k; j < N+1 ; j++){
@@ -64,7 +97,7 @@ void triangularSuperiormente(vector<vector<double>> augmentedMatrix, int N){
 }
 
 /*Funcion que dada una matriz aumentada triangular superior, resuelve el sistema asociado. */
-vector<double>& backwardSubstitution(vector<vector<double>> augmentedMatrix, int N, vector<double> &res){
+vector<double>& backwardSubstitution(vector<vector<double>> &augmentedMatrix, int N, vector<double> &res){
 
 	for (int i = N-1; i >= 0; i--){
 
@@ -83,12 +116,16 @@ vector<double>& backwardSubstitution(vector<vector<double>> augmentedMatrix, int
 /* Metodo de eliminación gaussiana para resolver el sistema A*X = B utilizando una matriz aumentada .*/
 /* Como precondición Aii != 0 para todo 0 <=i < N en cada paso de la eliminación*/
 /* Matriz de N filas y N+1 columnas(1 columna de más ya que la matriz fue aumentada)*/
-vector<double>& Elim_Gaussiana(vector<vector<double>> augmentedMatrix, vector<double> &res){
+vector<double>& Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res){
 
-	int N = augmentedMatrix.size()-1;
+	int N = augmentedMatrix.size();
+    vector<vector<double>> copy_m (augmentedMatrix);
 
 	triangularSuperiormente(augmentedMatrix, N);
+    //print_matrix(augmentedMatrix,15);
 	backwardSubstitution(augmentedMatrix, N, res);
+    //print_matrix(augmentedMatrix,15);
+    test_matrix(copy_m,res,0.0001);
 
 	return res;
 }

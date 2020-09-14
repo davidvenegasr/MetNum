@@ -88,7 +88,7 @@ int main(int argc, char** argv){
         }
     }
 
-    vector<double> results;
+    vector<double> results (cant_equipos,0);
     // Ejecutamos el algoritmo
 
     if(metodo == "0"){
@@ -101,7 +101,7 @@ int main(int argc, char** argv){
 
     ofstream Output;
     for (double rating: results){
-        fout << rating << "\n";
+        cout << rating << "\n";
     }
     fout.close();
 
