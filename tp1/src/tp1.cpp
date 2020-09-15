@@ -36,7 +36,8 @@ int main(int argc, char** argv){
     }
 
     // Leemos el input
-    fstream fin (input_file);
+//    fstream fin (input_file);
+    fstream fin ("tp1/tests/test1.in");
     fstream fout (output_file);
     int cant_equipos = 0;
     int cant_partidos = 0;
@@ -92,11 +93,11 @@ int main(int argc, char** argv){
     // Ejecutamos el algoritmo
 
     if(metodo == "0"){
-        results = CMM(Equipos, results);
+        CMM(Equipos, results);
     }else if (metodo == "0"){
-        results = WP(Equipos, results);
+        WP(Equipos, results);
     } else{
-
+        //ALTERNATIVO
     }
 
     ofstream Output;

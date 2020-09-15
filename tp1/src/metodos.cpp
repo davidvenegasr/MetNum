@@ -3,7 +3,7 @@
 #include <cmath>
 #include "metodos.h"
 
-vector<double>& Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res);
+void Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res);
 
 void print_matrix(vector<vector<double>> &matrix, int width) {
     for (int i = 0; i < matrix.size(); ++i) {
@@ -73,7 +73,7 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
         i++;
     }
     // Resolvemos el sistema
-    res = Elim_Gaussiana(C,res);
+    Elim_Gaussiana(C,res);
     return res;
 }
 
@@ -116,7 +116,7 @@ vector<double>& backwardSubstitution(vector<vector<double>> &augmentedMatrix, in
 /* Metodo de eliminación gaussiana para resolver el sistema A*X = B utilizando una matriz aumentada .*/
 /* Como precondición Aii != 0 para todo 0 <=i < N en cada paso de la eliminación*/
 /* Matriz de N filas y N+1 columnas(1 columna de más ya que la matriz fue aumentada)*/
-vector<double>& Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res){
+void Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res){
 
 	int N = augmentedMatrix.size();
     vector<vector<double>> copy_m (augmentedMatrix);
@@ -127,7 +127,6 @@ vector<double>& Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<d
     //print_matrix(augmentedMatrix,15);
     test_matrix(copy_m,res,0.0001);
 
-	return res;
 }
 
 //TODO: Chequear si hace falta devolver el vector por referencia si igualmente lo modificamos por referencia.
