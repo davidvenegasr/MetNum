@@ -37,7 +37,6 @@ int main(int argc, char** argv){
 
     // Leemos el input
     fstream fin (input_file);
-    fstream fout (output_file);
     int cant_equipos = 0;
     int cant_partidos = 0;
     fin >> cant_equipos >> cant_partidos;
@@ -102,9 +101,10 @@ int main(int argc, char** argv){
         Massey(Equipos, results);
     }
 
-    ofstream Output;
+    ofstream fout (output_file);
     for (double rating: results){
-        cout << rating << "\n";
+        fout << rating << "\n";
+        //cout << rating << "\n";
     }
     fout.close();
 
