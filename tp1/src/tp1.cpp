@@ -36,8 +36,7 @@ int main(int argc, char** argv){
     }
 
     // Leemos el input
-//    fstream fin (input_file);
-    fstream fin ("tp1/tests/test1.in");
+    fstream fin (input_file);
     fstream fout (output_file);
     int cant_equipos = 0;
     int cant_partidos = 0;
@@ -62,6 +61,7 @@ int main(int argc, char** argv){
             equipo_actual.p_ganados += partido.ganador()==1 ? 1 : 0;
             equipo_actual.p_perdidos += partido.ganador()==2 ? 1 : 0;
             equipo_actual.cant_matches_con[partido.equipo_2]++;
+            equipo_actual.diferencia_de_puntos += partido.puntaje_1 - partido.puntaje_2;
         }else{
             //El equipo 1 no existe todavia, debo agregarlo
             Equipo equipo_actual_1;
@@ -69,6 +69,7 @@ int main(int argc, char** argv){
             equipo_actual_1.p_ganados += partido.ganador()==1 ? 1 : 0;
             equipo_actual_1.p_perdidos += partido.ganador()==2 ? 1 : 0;
             equipo_actual_1.cant_matches_con.insert({partido.equipo_2, 1});
+            equipo_actual_1.diferencia_de_puntos = partido.puntaje_1 - partido.puntaje_2;
             Equipos.insert({equipo_actual_1.id, equipo_actual_1});
         }
 
@@ -78,6 +79,7 @@ int main(int argc, char** argv){
             equipo_actual.p_ganados += partido.ganador()==2 ? 1 : 0;
             equipo_actual.p_perdidos += partido.ganador()==1 ? 1 : 0;
             equipo_actual.cant_matches_con[partido.equipo_1]++;
+            equipo_actual.diferencia_de_puntos += partido.puntaje_2 - partido.puntaje_1;
         }else{
             //El equipo 2 no existe todavia, debo agregarlo
             Equipo equipo_actual_2;
@@ -85,19 +87,19 @@ int main(int argc, char** argv){
             equipo_actual_2.p_ganados += partido.ganador()==2 ? 1 : 0;
             equipo_actual_2.p_perdidos += partido.ganador()==1 ? 1 : 0;
             equipo_actual_2.cant_matches_con.insert({partido.equipo_1, 1});
+            equipo_actual_2.diferencia_de_puntos = partido.puntaje_2 - partido.puntaje_1;
             Equipos.insert({equipo_actual_2.id, equipo_actual_2});
         }
     }
 
-    vector<double> results (cant_equipos,0);
     // Ejecutamos el algoritmo
-
+    vector<double> results (cant_equipos,0);
     if(metodo == "0"){
         CMM(Equipos, results);
-    }else if (metodo == "0"){
+    }else if (metodo == "1"){
         WP(Equipos, results);
     } else{
-        //ALTERNATIVO
+        Massey(Equipos, results);
     }
 
     ofstream Output;

@@ -77,6 +77,51 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
     return res;
 }
 
+vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
+    vector<vector<double>> M(Equipos.size(), vector<double>(Equipos.size() + 1, 0));
+    // Llenamos la matriz M (aumentada) con sus datos correspondientes
+    int i = 0;
+    for (const auto &ei : Equipos) {
+        int j = 0;
+        auto &equipo_i = ei.second;
+        for (const auto &ej : Equipos) {
+            auto &equipo_j = ej.second;
+            if (i == j) {
+                M[i][j] = equipo_i.p_totales();
+            } else {
+                if (equipo_i.cant_matches_con.count(equipo_j.id)) {
+                    M[i][j] = 0 - equipo_i.cant_matches_con.at(equipo_j.id);
+                } else {
+                    M[i][j] = 0;
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+
+    i = 0;
+    for (const auto &ei : Equipos) {
+        auto &equipo_i = ei.second;
+        M[i][Equipos.size()] = equipo_i.diferencia_de_puntos;
+        i++;
+    }
+
+    //Ajusto los valores de la matriz de Massey
+    int N = M.size();
+    for (int k = 0; k < N + 1; ++k) {
+        if (k < N) {
+            M[N - 1][k] = 1;
+        } else {
+            M[N - 1][k] = 0;
+        }
+    }
+
+    // Resolvemos el sistema
+    //print_matrix(M,4);
+    Elim_Gaussiana(M,res);
+    return res;
+}
 
 /*Funcion que triangula superiormente una matriz aumentada sin realizar permutaciones. */
 void triangularSuperiormente(vector<vector<double>> &augmentedMatrix, int N){
@@ -125,10 +170,8 @@ void Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res
     //print_matrix(augmentedMatrix,15);
 	backwardSubstitution(augmentedMatrix, N, res);
     //print_matrix(augmentedMatrix,15);
-    test_matrix(copy_m,res,0.0001);
+    test_matrix(copy_m,res,0.0001); //TODO: Comentar cuando ande todo
 
 }
-
-//TODO: Chequear si hace falta devolver el vector por referencia si igualmente lo modificamos por referencia.
 
 
