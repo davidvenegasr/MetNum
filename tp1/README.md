@@ -12,6 +12,6 @@ Rankings Deportivos utilizando los métodos de Colley (CMM), Winning Percentage 
 
 El Tp continen un ```Makefile``` para facilitar el compilado de tal forma que basta con escribir en consola: ```make``` para compilar usando g++. A su vez se puede usar ```make clean``` para borrar los binarios.
 
-Una vez compilado se puede hacer ejecutar desde consola como:
+Una vez compilado se puede ejecutar el programa desde consola como:
 
 `./tp1 [método] [entrada] [salida]`.
