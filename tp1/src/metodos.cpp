@@ -3,7 +3,8 @@
 #include <cmath>
 #include "metodos.h"
 
-void Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res);
+void Elim_Gaussiana_Sin_Permutaciones(vector<vector<double>> &augmentedMatrix, vector<double> &res);
+void Elim_Gaussiana_Con_Permutaciones(vector<vector<double>> &augmentedMatrix, vector<double> &res);
 
 void print_matrix(vector<vector<double>> &matrix, int width) {
     for (int i = 0; i < matrix.size(); ++i) {
@@ -73,7 +74,7 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
         i++;
     }
     // Resolvemos el sistema
-    Elim_Gaussiana(C,res);
+    Elim_Gaussiana_Sin_Permutaciones(C,res);
     return res;
 }
 
@@ -119,12 +120,23 @@ vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
 
     // Resolvemos el sistema
     //print_matrix(M,4);
-    Elim_Gaussiana(M,res);
+    Elim_Gaussiana_Con_Permutaciones(M,res);
     return res;
 }
 
+/*Funcion que swapea dos filas de una matriz*/
+void swap_row(vector<vector<double>> &augmentedMatrix, int N, int i, int j){
+
+	for(int k = 0; k < N + 1; k++){
+		double temp = augmentedMatrix[i][k];
+		augmentedMatrix[i][k] = augmentedMatrix[j][k];
+		augmentedMatrix[j][k] = temp;
+	}
+}
+
 /*Funcion que triangula superiormente una matriz aumentada sin realizar permutaciones. */
-void triangularSuperiormente(vector<vector<double>> &augmentedMatrix, int N){
+/* Como precondición Aii != 0 para todo 0 <=i < N en cada paso de la eliminación*/
+void triangularSupSinPermutaciones(vector<vector<double>> &augmentedMatrix, int N){
 
 	for (int k = 0; k < N; k++){
 
@@ -139,6 +151,40 @@ void triangularSuperiormente(vector<vector<double>> &augmentedMatrix, int N){
 			}
 		}	
 	}
+}
+
+/*Funcion que triangula superiormente una matriz aumentada realizando permutaciones. */
+/* Como precondición la matriz aumentada ingresada como parametro debe ser no singular. */ 
+void triangularSupConPermutaciones(vector<vector<double>> &augmentedMatrix, int N){
+
+	for (int k = 0; k < N; k++){
+
+		int index_max = k;
+		double value_max = fabs(augmentedMatrix[index_max][k]);
+
+		for (int i = k+1; i < N; i++){
+			if (fabs(augmentedMatrix[i][k]) > fabs(value_max)){
+				value_max = augmentedMatrix[i][k];
+				index_max = i;
+			}
+		}
+
+		if (index_max != k){
+			swap_row(augmentedMatrix, N, k, index_max);
+		}
+
+		for (int i = k+1; i < N; i++){
+            if (augmentedMatrix[k][k] == 0){
+                std::cout <<"ERROR"<<endl;
+            }
+			double factor = augmentedMatrix[i][k]/augmentedMatrix[k][k];
+			
+			for (int j = k; j < N+1 ; j++){
+				augmentedMatrix[i][j] -= augmentedMatrix[k][j]*factor;
+			}
+		}	
+	}
+
 }
 
 /*Funcion que dada una matriz aumentada triangular superior, resuelve el sistema asociado. */
@@ -161,16 +207,29 @@ vector<double>& backwardSubstitution(vector<vector<double>> &augmentedMatrix, in
 /* Metodo de eliminación gaussiana para resolver el sistema A*X = B utilizando una matriz aumentada .*/
 /* Como precondición Aii != 0 para todo 0 <=i < N en cada paso de la eliminación*/
 /* Matriz de N filas y N+1 columnas(1 columna de más ya que la matriz fue aumentada)*/
-void Elim_Gaussiana(vector<vector<double>> &augmentedMatrix, vector<double> &res){
+void Elim_Gaussiana_Sin_Permutaciones(vector<vector<double>> &augmentedMatrix, vector<double> &res){
 
 	int N = augmentedMatrix.size();
     vector<vector<double>> copy_m (augmentedMatrix);
 
-	triangularSuperiormente(augmentedMatrix, N);
+	triangularSupSinPermutaciones(augmentedMatrix, N);
     //print_matrix(augmentedMatrix,15);
 	backwardSubstitution(augmentedMatrix, N, res);
     //print_matrix(augmentedMatrix,15);
-    test_matrix(copy_m,res,0.0001); //TODO: Comentar cuando ande todo
+    test_matrix(copy_m,res,0.0001); //TODO: Comentar cuando ande todov
+
+}
+
+void Elim_Gaussiana_Con_Permutaciones(vector<vector<double>> &augmentedMatrix, vector<double> &res){
+
+	int N = augmentedMatrix.size();
+    vector<vector<double>> copy_m (augmentedMatrix);
+
+	triangularSupConPermutaciones(augmentedMatrix, N);
+    //print_matrix(augmentedMatrix,15);
+	backwardSubstitution(augmentedMatrix, N, res);
+    //print_matrix(augmentedMatrix,15);
+    test_matrix(copy_m,res,0.0001); //TODO: Comentar cuando ande todov
 
 }
 
