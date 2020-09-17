@@ -1,6 +1,6 @@
 # TP1  METODOS NUMERICOS -- GRUPO #17
 
-Rankings Deportivos utilizando el metodos de Colley (CMM), Winning Percentage (WP) y Massey.
+Rankings Deportivos utilizando los métodos de Colley (CMM), Winning Percentage (WP) y Massey.
 
 ## Integrantes
 
