@@ -24,6 +24,7 @@ def clean():
 def test():
   build()
   import unittest
+  print(argv[:1])
   unittest.main(module='scripts.tptests', exit=False, argv=argv[:1], verbosity=3)
 
 main()

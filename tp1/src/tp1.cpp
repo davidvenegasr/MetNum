@@ -16,20 +16,20 @@ int main(int argc, char** argv){
     };
 
     // Verificar que el metodo pedido exista
-    if (argc < 2 || metodos_implementados.find(argv[1]) == metodos_implementados.end()){
-        cerr << "Metodo no encontrado: " << argv[1] << endl;
+    if (argc < 2 || metodos_implementados.find(argv[3]) == metodos_implementados.end()){
+        cerr << "Metodo no encontrado: " << argv[3] << endl;
         cerr << "Los algoritmos existentes son: " << endl;
         for (auto& alg_desc: metodos_implementados) cerr << "\t- " << alg_desc.first << ": " << alg_desc.second << endl;
         return 0;
     }
 
     // Nos quedamos con los parametros de entrada
-    string metodo = argv[1];
+    string metodo = argv[3];
     string input_file;
     string output_file;
-    if (argc > 3 && argv[2] != "" && argv[3] != "") {
-        input_file = argv[2];
-        output_file = argv[3];
+    if (argc > 3 && argv[2] != "" && argv[1] != "") {
+        input_file = argv[1];
+        output_file = argv[2];
     }else {
         cerr<<"Ingreso incorrecto de parametros" <<endl;
         return 0;
