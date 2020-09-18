@@ -1,0 +1,19 @@
+{
+    ".deps_version": 2, 
+    "g++ -o ./tp ./tp1.o ./metodos.o": {
+        ".": "input-5058f1af8388633f609cadb75a75dc9d", 
+        "metodos.o": "input-08110a29014a5583c7258c9b44431e0d", 
+        "tp": "input-fb2379b5f92d3f225b20f82250af4f47", 
+        "tp1.o": "input-1f6fe99ab2d276488b4572fbbe4e91d8"
+    }, 
+    "g++ -std=c++11 -O2 -c ./metodos.cpp -o ./metodos.o": {
+        ".": "input-5058f1af8388633f609cadb75a75dc9d", 
+        "metodos.cpp": "input-0a7a38a3acc02c1b575d3b3303172165", 
+        "metodos.o": "input-08110a29014a5583c7258c9b44431e0d"
+    }, 
+    "g++ -std=c++11 -O2 -c ./tp1.cpp -o ./tp1.o": {
+        ".": "input-5058f1af8388633f609cadb75a75dc9d", 
+        "tp1.cpp": "input-876592530c6fb69861803cf5550ccd3d", 
+        "tp1.o": "input-1f6fe99ab2d276488b4572fbbe4e91d8"
+    }
+}
