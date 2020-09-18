@@ -35,3 +35,7 @@ CMakeLists.txt
 cmake-build-debug
 
 ./vscode
+
+#python
+
+*.pyc
