@@ -35,6 +35,8 @@ CMakeLists.txt
 cmake-build-debug
 
 /.vscode
+#virtual environment folder env
+env/
 
 #python
 *.pyc
