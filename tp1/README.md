@@ -10,7 +10,14 @@ Rankings Deportivos utilizando los métodos de Colley (CMM), Winning Percentage 
 
 ## Uso y Compilado
 
-El Tp continen un ```Makefile``` para facilitar el compilado de tal forma que basta con escribir en consola: ```make``` para compilar usando g++. A su vez se puede usar ```make clean``` para borrar los binarios. Otra forma es hacer `python3 src/metnum.py build` para compilar el código con pytho
+El Tp continen un ```Makefile``` para facilitar el compilado de tal forma que basta con escribir en consola: ```make``` para compilar usando g++. A su vez se puede usar ```make clean``` para borrar los binarios. Otra forma es hacer `python3 src/metnum.py [opcion]` donde opcion puede ser:
+
+compile: Compila todos los *.cpp que hayan en el directorio.
+link: Genera el ejecutable en base a los *.o generados previamente.
+build: compile + link
+clean: borra los *.o y el ejecutable.
+test: hace el build, busca lo archivos *.in en la carpeta tests/, ejecuta el programa y guarda el
+resultado para cada corrida en el correspondiente .out. Despues, chequea que el resultado sea el "mismo" que el .expected. En este caso, la comparacion es por tolerancia coordenada a coordeanda del vector solucion.
 
 Una vez compilado se puede ejecutar el programa desde consola como:
 
