@@ -20,7 +20,7 @@ donde metodo vale: 0 para CMM, 1 para WP, y 2 Massey.
 
 ## Analisis de Experimentos
 
-Se tiene la carpeta ```experimentos/``` donde se encuentra el jupyter notebook ```experimentos.ipynb``` el cual se puede ejecutar utilizando un entorno virtual e instalando las librerias adecuadas con: 
+En la carpeta ```data/``` se tienen los archivos de entrada y salida con las extensiones ```.in``` y ```.out``` respectivamente. Por otra parte se tiene la carpeta ```experimentos/``` donde se encuentra el jupyter notebook ```experimentos.ipynb``` el cual se puede ejecutar utilizando un entorno virtual e instalando las librerias adecuadas con: 
 
 ```
 python3 -m venv env
