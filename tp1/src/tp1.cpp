@@ -97,8 +97,10 @@ int main(int argc, char** argv){
         CMM(Equipos, results);
     }else if (metodo == "1"){
         WP(Equipos, results);
-    } else{
+    }else if (metodo == "2"){
         Massey(Equipos, results);
+    }else{
+        ScoreRatio(Equipos, results);
     }
 
     ofstream fout (output_file);

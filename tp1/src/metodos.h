@@ -37,3 +37,6 @@ vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res);
 
 //Metodo de Massey
 vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res);
+
+//Metodo de Score Ratio System
+vector<double>& ScoreRatio(const map<int,Equipo> &Equipos, vector<double> &res);

@@ -124,6 +124,14 @@ vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
     return res;
 }
 
+vector<double>& ScoreRatio(const map<int,Equipo> &Equipos, vector<double> &res){
+	for(int i = 0; i < Equipos.size(); i++){
+        //double score = (double) Equipos[i].p_ganados / (double)Equipos[i].p_totales();
+        //res.push_back(score);
+    }
+    return res;
+}
+
 /*Funcion que swapea dos filas de una matriz*/
 void swap_row(vector<vector<double>> &augmentedMatrix, int N, int i, int j){
 
