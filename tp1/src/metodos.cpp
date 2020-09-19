@@ -36,27 +36,25 @@ bool test_matrix(vector<vector<double>> &M, vector<double> &X, double epsilon) {
     return r_bool;
 }
 
-vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
+void WP(map<int,Equipo> Equipos, vector<double> &res){
     for(uint32_t i = 1; i <= Equipos.size(); i++){
         double wp = (double) Equipos[i].p_ganados / (double) Equipos[i].partidos_totales();
         //std::cout << "Valor de wp: " <<  wp<<std::endl;
         res.push_back(wp);
     }
-    return res;
 }
 
 //TODO: Chequear si los ++i no increemntan las variables antes de evaluar los ciclos por primera vez.
 //Lo dejo escrito para que lo charlemos.
 
-vector<double>& ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
+void ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
 	for(uint32_t i = 1; i <= Equipos.size(); i++){
 		double score = (double) Equipos[i].diferencia_de_puntos / (double) Equipos[i].puntos_totales;
         res.push_back(score);
     }
-    return res;
 }
 
-vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
+void CMM(const map<int,Equipo> &Equipos, vector<double> &res){
     vector<vector<double>> C(Equipos.size(),vector<double>(Equipos.size()+1,0));
     // Llenamos la matriz C (aumentada) con sus datos correspondientes
     int i = 0;
@@ -87,10 +85,9 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
     }
     // Resolvemos el sistema
     Elim_Gaussiana_Sin_Permutaciones(C,res);
-    return res;
 }
 
-vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
+void Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
     vector<vector<double>> M(Equipos.size(), vector<double>(Equipos.size() + 1, 0));
     // Llenamos la matriz M (aumentada) con sus datos correspondientes
     int i = 0;
@@ -131,9 +128,7 @@ vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
     }
 
     // Resolvemos el sistema
-    //print_matrix(M,4);
     Elim_Gaussiana_Con_Permutaciones(M,res);
-    return res;
 }
 
 /*Funcion que swapea dos filas de una matriz*/

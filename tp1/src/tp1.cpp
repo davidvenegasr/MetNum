@@ -71,8 +71,8 @@ int main(int argc, char** argv){
             equipo_actual_1.p_perdidos += partido.ganador()==2 ? 1 : 0;
             equipo_actual_1.cant_matches_con.insert({partido.equipo_2, 1});
             equipo_actual_1.diferencia_de_puntos = partido.puntaje_1 - partido.puntaje_2;
-            equipo_actual_1.puntos_totales += partido.puntaje_1;
-            equipo_actual_1.puntos_totales += partido.puntaje_2;
+            equipo_actual_1.puntos_totales = partido.puntaje_1;
+            equipo_actual_1.puntos_totales = partido.puntaje_2;
             Equipos.insert({equipo_actual_1.id, equipo_actual_1});
         }
 
@@ -93,8 +93,8 @@ int main(int argc, char** argv){
             equipo_actual_2.p_perdidos += partido.ganador()==1 ? 1 : 0;
             equipo_actual_2.cant_matches_con.insert({partido.equipo_1, 1});
             equipo_actual_2.diferencia_de_puntos = partido.puntaje_2 - partido.puntaje_1;
-            equipo_actual_2.puntos_totales += partido.puntaje_1;
-            equipo_actual_2.puntos_totales += partido.puntaje_2;
+            equipo_actual_2.puntos_totales = partido.puntaje_1;
+            equipo_actual_2.puntos_totales = partido.puntaje_2;
             Equipos.insert({equipo_actual_2.id, equipo_actual_2});
         }
     }

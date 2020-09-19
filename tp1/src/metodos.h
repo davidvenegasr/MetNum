@@ -31,13 +31,13 @@ struct Partido{
 };
 
 //Metodo de Colley
-vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res);
+void CMM(const map<int,Equipo> &Equipos, vector<double> &res);
 
 //Metodo WP
-vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res);
+void WP(map<int,Equipo> Equipos, vector<double> &res);
 
 //Metodo de Massey
-vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res);
+void Massey(const map<int,Equipo> &Equipos, vector<double> &res);
 
 //Metodo de Score Ratio System
-vector<double>& ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res);
+void ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res);
