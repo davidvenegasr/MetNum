@@ -7,8 +7,8 @@ void Elim_Gaussiana_Sin_Permutaciones(vector<vector<double>> &augmentedMatrix, v
 void Elim_Gaussiana_Con_Permutaciones(vector<vector<double>> &augmentedMatrix, vector<double> &res);
 
 void print_matrix(vector<vector<double>> &matrix, int width) {
-    for (int i = 0; i < matrix.size(); ++i) {
-        for (int j = 0; j < matrix[0].size(); ++j) {
+    for (uint32_t i = 0; i < matrix.size(); ++i) {
+        for (uint32_t j = 0; j < matrix[0].size(); ++j) {
             std::cout <<std::setw(width) <<matrix[i][j] <<" ";
         }
         std::cout <<endl;
@@ -19,12 +19,12 @@ void print_matrix(vector<vector<double>> &matrix, int width) {
 bool test_matrix(vector<vector<double>> &M, vector<double> &X, double epsilon) {
     bool r_bool = true;
     vector<double> res(M.size(),0);
-    for (int i = 0; i < M.size(); ++i) {
-        for (int j = 0; j < M[0].size(); ++j) {
+    for (uint32_t i = 0; i < M.size(); ++i) {
+        for (uint32_t j = 0; j < M[0].size(); ++j) {
             res[i] += M[i][j]*X[j];
         }
     }
-    for (int i = 0; i < M.size(); ++i) {
+    for (uint32_t i = 0; i < M.size(); ++i) {
         std::cout <<std::setw(12) <<M[i][M.size()] <<" == " <<std::setw(12) <<res[i] <<" ?";
         if (fabs(res[i] - M[i][M.size()]) >= epsilon) {
             r_bool = false;
@@ -37,9 +37,9 @@ bool test_matrix(vector<vector<double>> &M, vector<double> &X, double epsilon) {
 }
 
 vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
-    for(int i = 0; i < Equipos.size(); i++){
-        double wp = (double) Equipos[i].p_ganados / (double)Equipos[i].partidos_totales();
-        std::cout << "Valor de wp: " << wp << std::endl;
+    for(uint32_t i = 1; i <= Equipos.size(); i++){
+        double wp = (double) Equipos[i].p_ganados / (double) Equipos[i].partidos_totales();
+        //std::cout << "Valor de wp: " <<  wp<<std::endl;
         res.push_back(wp);
     }
     return res;
@@ -49,7 +49,7 @@ vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
 //Lo dejo escrito para que lo charlemos.
 
 vector<double>& ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
-	for(int i = 0; i < Equipos.size(); i++){
+	for(uint32_t i = 1; i <= Equipos.size(); i++){
 		double score = (double) Equipos[i].diferencia_de_puntos / (double) Equipos[i].puntos_totales;
         res.push_back(score);
     }
