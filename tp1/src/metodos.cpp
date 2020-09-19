@@ -38,8 +38,20 @@ bool test_matrix(vector<vector<double>> &M, vector<double> &X, double epsilon) {
 
 vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res){
     for(int i = 0; i < Equipos.size(); i++){
-        double wp = (double) Equipos[i].p_ganados / (double)Equipos[i].p_totales();
+        double wp = (double) Equipos[i].p_ganados / (double)Equipos[i].partidos_totales();
+        std::cout << "Valor de wp: " << wp << std::endl;
         res.push_back(wp);
+    }
+    return res;
+}
+
+//TODO: Chequear si los ++i no increemntan las variables antes de evaluar los ciclos por primera vez.
+//Lo dejo escrito para que lo charlemos.
+
+vector<double>& ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
+	for(int i = 0; i < Equipos.size(); i++){
+		double score = (double) Equipos[i].diferencia_de_puntos / (double) Equipos[i].puntos_totales;
+        res.push_back(score);
     }
     return res;
 }
@@ -54,7 +66,7 @@ vector<double>& CMM(const map<int,Equipo> &Equipos, vector<double> &res){
         for (const auto &ej : Equipos) {
             auto &equipo_j = ej.second;
             if (i == j) {
-                C[i][j] = 2 + equipo_i.p_totales();
+                C[i][j] = 2 + equipo_i.partidos_totales();
             } else {
                 if (equipo_i.cant_matches_con.count(equipo_j.id)) {
                     C[i][j] = 0 - equipo_i.cant_matches_con.at(equipo_j.id);
@@ -88,7 +100,7 @@ vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
         for (const auto &ej : Equipos) {
             auto &equipo_j = ej.second;
             if (i == j) {
-                M[i][j] = equipo_i.p_totales();
+                M[i][j] = equipo_i.partidos_totales();
             } else {
                 if (equipo_i.cant_matches_con.count(equipo_j.id)) {
                     M[i][j] = 0 - equipo_i.cant_matches_con.at(equipo_j.id);
@@ -121,14 +133,6 @@ vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res) {
     // Resolvemos el sistema
     //print_matrix(M,4);
     Elim_Gaussiana_Con_Permutaciones(M,res);
-    return res;
-}
-
-vector<double>& ScoreRatio(const map<int,Equipo> &Equipos, vector<double> &res){
-	for(int i = 0; i < Equipos.size(); i++){
-        //double score = (double) Equipos[i].p_ganados / (double)Equipos[i].p_totales();
-        //res.push_back(score);
-    }
     return res;
 }
 

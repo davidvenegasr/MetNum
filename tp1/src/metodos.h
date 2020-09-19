@@ -8,9 +8,10 @@ struct Equipo{
     int p_ganados;
     int p_perdidos;
     map<int,int> cant_matches_con; //map(id de otro equipo, cantidad de partidos con ese equipo)
-    int diferencia_de_puntos;   //valor usado en el metodo de Massey
+    int diferencia_de_puntos;      //valor usado en el metodo de Massey
+    int puntos_totales;            //valor usado en el metodo de Score Ratio
 
-    int p_totales() const {return p_ganados+p_perdidos;};
+    int partidos_totales() const {return p_ganados+p_perdidos;};
     Equipo(){id=0; p_perdidos=0; p_ganados=0;};
     bool operator<(const Equipo &e) const {
         return (id < e.id);
@@ -39,4 +40,4 @@ vector<double>& WP(map<int,Equipo> Equipos, vector<double> &res);
 vector<double>& Massey(const map<int,Equipo> &Equipos, vector<double> &res);
 
 //Metodo de Score Ratio System
-vector<double>& ScoreRatio(const map<int,Equipo> &Equipos, vector<double> &res);
+vector<double>& ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res);
