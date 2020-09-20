@@ -40,7 +40,7 @@ void WP(map<int,Equipo> Equipos, vector<double> &res){
     for(uint32_t i = 1; i <= Equipos.size(); i++){
         double wp = (double) Equipos[i].p_ganados / (double) Equipos[i].partidos_totales();
         //std::cout << "Valor de wp: " <<  wp<<std::endl;
-        res.push_back(wp);
+        res[i-1]=wp;
     }
 }
 
@@ -50,7 +50,7 @@ void WP(map<int,Equipo> Equipos, vector<double> &res){
 void ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
 	for(uint32_t i = 1; i <= Equipos.size(); i++){
 		double score = (double) Equipos[i].diferencia_de_puntos / (double) Equipos[i].puntos_totales;
-        res.push_back(score);
+        res[i-1]= score;
     }
 }
 
