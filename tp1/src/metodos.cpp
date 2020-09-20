@@ -37,10 +37,12 @@ bool test_matrix(vector<vector<double>> &M, vector<double> &X, double epsilon) {
 }
 
 void WP(map<int,Equipo> Equipos, vector<double> &res){
-    for(uint32_t i = 1; i <= Equipos.size(); i++){
-        double wp = (double) Equipos[i].p_ganados / (double) Equipos[i].partidos_totales();
-        //std::cout << "Valor de wp: " <<  wp<<std::endl;
-        res[i-1]=wp;
+    map<int,Equipo>::iterator itr;
+    map<int,Equipo>::iterator start = Equipos.begin();
+    for(itr= Equipos.begin(); itr!=Equipos.end();itr++){
+        Equipo E = itr->second;
+        double wp = (double) E.p_ganados / (double) E.partidos_totales();
+        res[distance(start,itr)]=wp;
     }
 }
 
@@ -48,9 +50,15 @@ void WP(map<int,Equipo> Equipos, vector<double> &res){
 //Lo dejo escrito para que lo charlemos.
 
 void ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
-	for(uint32_t i = 1; i <= Equipos.size(); i++){
-		double score = (double) Equipos[i].diferencia_de_puntos / (double) Equipos[i].puntos_totales;
-        res[i-1]= score;
+    map<int,Equipo>::iterator itr;
+    map<int,Equipo>::iterator start = Equipos.begin();
+    double score = 0;
+    for(itr= Equipos.begin(); itr!=Equipos.end();itr++){
+        Equipo E = itr->second;
+        if(E.puntos_totales != 0){
+            score = (double) E.diferencia_de_puntos / (double) E.puntos_totales;
+        }
+        res[distance(start,itr)]=score;
     }
 }
 
