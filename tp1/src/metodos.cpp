@@ -55,9 +55,7 @@ void ScoreRatio(map<int,Equipo> &Equipos, vector<double> &res){
     double score = 0;
     for(itr= Equipos.begin(); itr!=Equipos.end();itr++){
         Equipo E = itr->second;
-        if(E.puntos_totales != 0){
-            score = (double) E.diferencia_de_puntos / (double) E.puntos_totales;
-        }
+        score = (double) E.diferencia_de_puntos / (double) E.puntos_totales;
         res[distance(start,itr)]=score;
     }
 }
