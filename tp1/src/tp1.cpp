@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include "metodos.h"
+#include <chrono>
 
 using namespace std;
 
@@ -101,6 +102,9 @@ int main(int argc, char** argv){
 
     // Ejecutamos el algoritmo
     vector<double> results (cant_equipos,0);
+    
+    // Necesario para tomar el tiempo del programa
+    auto start = chrono::steady_clock::now();
     if(metodo == "0"){
         CMM(Equipos, results);
     }else if (metodo == "1"){
@@ -110,6 +114,11 @@ int main(int argc, char** argv){
     }else{
         Massey(Equipos, results);
     }
+    auto end = chrono::steady_clock::now();
+	double total_time = chrono::duration<double, micro>(end - start).count();
+
+	// Imprimimos el tiempo de ejecución por stderr.
+	clog << total_time;
 
     ofstream fout (output_file);
     for (double rating: results){
