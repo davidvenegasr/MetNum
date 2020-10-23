@@ -30,7 +30,7 @@
 *.exe
 *.app
 
-CMakeLists.txt
+
 cmake-build-debug
 
 /.vscode
