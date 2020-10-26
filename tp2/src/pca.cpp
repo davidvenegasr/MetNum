@@ -37,7 +37,7 @@ void PCA::fit(Matrix X)
 
 	std::pair<Vector, Matrix> eigens = get_first_eigenvalues(C, alpha);	
 	Vector eigenValues = std::get<0>(eigens);
-	Vector eigenVectors = std::get<1>(eigens);
+	Matrix eigenVectors = std::get<1>(eigens);
 
 	this->T = eigenVectors;
 }
