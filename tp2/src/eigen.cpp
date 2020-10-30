@@ -15,7 +15,7 @@ pair<double, Vector> power_iteration(const Matrix& X, unsigned num_iter, double 
     double eigenvalue;
 
     // Realizo la cantidad de iteraciones ingresadas por parámetro, o hasta que converger al autovector.
-    while (num_iter > 0 && (eigenActual-eigenAnterior).isZero(eps)){
+    while (num_iter > 0 && !(eigenActual-eigenAnterior).isZero(eps)){
 
         eigenAnterior = eigenActual;
         eigenActual = X * eigenActual;
