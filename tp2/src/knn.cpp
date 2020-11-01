@@ -19,49 +19,51 @@ void KNNClassifier::fit(Matrix X, Matrix y)
 }
 
 double KNNClassifier::predictAux(const Vector& vec) {
-	Matrix sub(X.rows(), X.cols());
-    for (int i = 0; i < sub.rows(); i++) {
-        sub.row(i) = vec;
+
+	Matrix mat_a_restar(X.rows(), X.cols());
+
+    // Realizo el calculo de la distancia euclideana.
+    for (int i = 0; i < mat_a_restar.rows(); i++) {
+        mat_a_restar.row(i) = vec;
     }
 
-	Matrix aux(X.rows(), X.cols());
-    aux = X - sub;
+	Matrix mat_restada(X.rows(), X.cols());
+    mat_restada = X - mat_a_restar;
 
-    // Termino de hacer distancia euclideana.
-    Vector dis(X.rows());
+    Vector distancia(X.rows());
     for (int i = 0; i < X.rows(); i++) {
-        dis(i) = aux.row(i).squaredNorm();
+        distancia(i) = mat_restada.row(i).squaredNorm();
     }
 
-    // Ordeno digitos por distancia.
-    vector<int> ind(dis.size());
-   	iota(ind.begin(), ind.end(), 0);
-	sort(ind.begin(), ind.end(), [&dis](size_t i1, size_t i2) {return dis(i1) < dis(i2);});
-    ind.resize(k);  //me quedo solo con los mas cercanos
+    // Selecciono los k digitos cuya distancia está mas cerca
+    vector<int> indices(distancia.size());
+   	iota(indices.begin(), indices.end(), 0);
+	sort(indices.begin(), indices.end(), [&distancia](size_t i1, size_t i2) {return distancia(i1) < distancia(i2);});
+    indices.resize(k);  
 
-    // Lleno el vector res con los tags pertinentes a los k cercanos.
+    // Asigno los valores correspondientes a cada indice
     Vector res(k);
 	for (unsigned int i = 0; i < k; i++) {
-        res(i) = y(ind[i]);
+        res(i) = y(indices[i]);
     }
 
-    // Contamos la cantidad de apariciones de cada tag entre los k cercanos.
-    Vector coun(res.size());
-    for (int i = 0; i < coun.size(); i++) {
-    	coun(i) = 0;
+    // Cuento la cantidad de apariciones de cada tag entre los k mas cercanos
+    Vector cantidades(res.size());
+    for (int i = 0; i < cantidades.size(); i++) {
+    	cantidades(i) = 0;
     	for (int j = 0; j < res.size(); j++) {
     	    if (res(i) == res(j)) {
-    	        coun(i)++;
+    	        cantidades(i)++;
     	    }
     	}
  	}
 
-    // Hallamos el maximo de coun.
+    // Hallamos el elemento mayor cantidad de apariciones
     double max = -1;
  	int index = -1;
-    for (int i = 0; i < coun.count(); i++) {
-    	if (coun(i) > max) {
-       		max = coun(i);
+    for (int i = 0; i < cantidades.count(); i++) {
+    	if (cantidades(i) > max) {
+       		max = cantidades(i);
        		index = i;
      	}
    }

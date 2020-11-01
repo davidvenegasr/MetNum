@@ -55,7 +55,7 @@ void save_vector(const Vector &A, const string &output) {
     Output.close();
 }
 
-int run(const string& train_set_file, const string& test_set_file, const string& classif, const unsigned int& k, const unsigned int& alpha, const unsigned int& method) {
+int run(const string& train_set_file, const string& test_set_file, const string& output, const unsigned int& k, const unsigned int& alpha, const unsigned int& method) {
     Matrix train_set_matrix = create_matrix(train_set_file);
     Matrix y_train = train_set_matrix.col(0);
     Matrix X_train = train_set_matrix.block(0, 1, train_set_matrix.rows(), train_set_matrix.cols() - 1);
@@ -66,7 +66,7 @@ int run(const string& train_set_file, const string& test_set_file, const string&
     if (method == 0) { // kNN
         knn.fit(X_train, y_train);
         Vector y_predict = knn.predict(X_predict);
-        save_vector(y_predict, classif);
+        save_vector(y_predict, output);
 
         return 0;
     } else if (method == 1) { // PCA + kNN
@@ -77,7 +77,7 @@ int run(const string& train_set_file, const string& test_set_file, const string&
 
         knn.fit(X_train_trans, y_train);
         Vector y_predict = knn.predict(X_predict_trans);
-        save_vector(y_predict, classif);
+        save_vector(y_predict, output);
 
         return 0;
     } else {
@@ -115,29 +115,29 @@ int main(int argc, char** argv){
         unsigned int method = atoi(argv[2]);
         string train_set_file = argv[4];
         string test_set_file = argv[6];
-        string classif = argv[8];
+        string output = argv[8];
 
         unsigned int k = 10;
         unsigned int alpha = 30;
 
-        return run(train_set_file, test_set_file, classif, k, alpha, method);
+        return run(train_set_file, test_set_file, output, k, alpha, method);
     } else if (argc == 11) {
         unsigned int method = atoi(argv[2]);
         string train_set_file = argv[6];
         string test_set_file = argv[8];
-        string classif = argv[10];
+        string output = argv[10];
 
         string optional = argv[3];
         if (optional == "--k") {
             unsigned int k = atoi(argv[4]);
             unsigned int alpha = 30;
 
-            return run(train_set_file, test_set_file, classif, k, alpha, method);
+            return run(train_set_file, test_set_file, output, k, alpha, method);
         } else if (optional == "--alpha") {
             unsigned int k = 10;
             unsigned int alpha = atoi(argv[4]);
 
-            return run(train_set_file, test_set_file, classif, k, alpha, method);
+            return run(train_set_file, test_set_file, output, k, alpha, method);
         } else {
             printf("Parametros Invalidos\n");
             return 1;
@@ -146,7 +146,7 @@ int main(int argc, char** argv){
         unsigned int method = atoi(argv[2]);
         string train_set_file = argv[8];
         string test_set_file = argv[10];
-        string classif = argv[12];
+        string output = argv[12];
 
         string optional1 = argv[3];
         string optional2 = argv[5];
@@ -154,12 +154,12 @@ int main(int argc, char** argv){
             unsigned int k = atoi(argv[4]);
             unsigned int alpha = atoi(argv[6]);
 
-            return run(train_set_file, test_set_file, classif, k, alpha, method);
+            return run(train_set_file, test_set_file, output, k, alpha, method);
         } else if (optional1 == "--alpha" && optional2 == "--k") {
             unsigned int k = atoi(argv[6]);
             unsigned int alpha = atoi(argv[4]);
 
-            return run(train_set_file, test_set_file, classif, k, alpha, method);
+            return run(train_set_file, test_set_file, output, k, alpha, method);
         } else {
             printf("Parametros Invalidos\n");
             return 1;
